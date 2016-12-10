@@ -2,6 +2,7 @@ package com.wedeploy.test;
 
 import com.wedeploy.test.fixture.DockerClientHelper;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -13,6 +14,14 @@ public class IntegrationTest {
 	@BeforeClass
 	public static void setUpTestSuite() {
 		docker = new DockerClientHelper();
+	}
+
+	@Before
+	public void setUp() {
+		try {
+			docker.deinitializeSwarm();
+		} catch (Exception e) {
+		}
 	}
 
 	@Test

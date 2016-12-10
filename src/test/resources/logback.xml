@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration>
+
+    <!-- appenders -->
+
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[ %logger{10} ]\t%msg%n%ex</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- configurations -->
+
+
+    <logger name="com.wedeploy.test">
+        <level value="DEBUG" />
+    </logger>
+
+    <logger name="com.github.dockerjava">
+        <level value="ERROR" />
+    </logger>
+
+    <!-- root -->
+    <root>
+        <level value="WARN" />
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
