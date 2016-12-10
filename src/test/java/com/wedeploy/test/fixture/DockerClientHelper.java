@@ -37,6 +37,10 @@ public class DockerClientHelper {
 			.exec();
 	}
 
+	public DockerClient getClient() {
+		return dockerClient;
+	}
+
 	public void initializeSwarmManager() {
 		log.debug("initializing swarm manager");
 

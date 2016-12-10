@@ -1,20 +1,12 @@
 package com.wedeploy.test;
 
-import com.wedeploy.test.fixture.DockerClientHelper;
-
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Ciro S. Costa
  */
-public class IntegrationTest {
-
-	@BeforeClass
-	public static void setUpTestSuite() {
-		docker = new DockerClientHelper();
-	}
+public class InitializationTest extends DockerTest {
 
 	@Before
 	public void setUp() {
@@ -47,7 +39,5 @@ public class IntegrationTest {
 	public void testSwarm_assertFailsIfLeaveNonInitiated() {
 		docker.deinitializeSwarm();
 	}
-
-	protected static DockerClientHelper docker;
 
 }
