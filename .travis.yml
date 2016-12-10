@@ -1,0 +1,30 @@
+sudo: required
+language: java
+
+before_cache:
+  - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
+
+services:
+  - docker
+
+jdk:
+  - oraclejdk8
+
+env:
+  - DOCKER_OPTS="-H tcp://0.0.0.0:2375"
+
+install:
+  - ./gradlew build -x test
+
+before_script:
+  # fix /etc/hosts so that Inet4Address can grab localhost addr
+  - echo "127.0.0.1 " `hostname` | sudo tee -a /etc/hosts 2>&1 > /dev/null
+
+script:
+  - ./gradlew test -S
+
+after_failure:
+  - find build/test-results -name "TEST-*.xml" -type f -print0 | xargs -0 cat
+
+notifications:
+  email: false

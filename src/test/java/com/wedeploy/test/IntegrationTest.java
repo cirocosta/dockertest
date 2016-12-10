@@ -18,7 +18,7 @@ import org.junit.Test;
 public class IntegrationTest {
 
 	@BeforeClass
-	public void setUpTestSuite() {
+	public static void setUpTestSuite() {
 		DockerClientConfig config = DefaultDockerClientConfig
 			.createDefaultConfigBuilder()
 			.withApiVersion(RemoteApiVersion.VERSION_1_24)
@@ -53,6 +53,6 @@ public class IntegrationTest {
 			.exec();
 	}
 
-	private DockerClient dockerClient;
+	private static DockerClient dockerClient;
 	private static String hostIp;
 }

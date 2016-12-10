@@ -16,3 +16,9 @@ dependencies {
 task wrapper(type: Wrapper) {
 	gradleVersion = '3.1'
 }
+
+tasks.withType(Test) {
+	testLogging {
+    events "passed", "skipped", "failed"
+	}
+}
