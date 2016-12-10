@@ -15,12 +15,8 @@ buildscript {
 }
 
 repositories {
-	mavenLocal()
 	mavenCentral()
-
-	maven {
-	  url 'https://oss.sonatype.org/content/repositories/snapshots/'
-	}
+	mavenLocal()
 
 	maven {
 	  url "https://jitpack.io"
@@ -28,9 +24,8 @@ repositories {
 }
 
 dependencies {
-	compile 'com.github.cirocosta:docker-java:docker-swarm-SNAPSHOT'
-
-	testCompile group: 'junit', name: 'junit', version: '4.11'
+	testCompile 'com.github.cirocosta:docker-java:docker-swarm-SNAPSHOT'
+	testCompile 'junit:junit:4.11'
 }
 
 task wrapper(type: Wrapper) {
