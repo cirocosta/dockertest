@@ -1,6 +1,5 @@
 package com.wedeploy.test;
 
-
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.model.SwarmSpec;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
@@ -8,7 +7,9 @@ import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.RemoteApiVersion;
 import com.github.dockerjava.netty.NettyDockerCmdExecFactory;
+
 import com.wedeploy.test.fixture.Network;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -32,13 +33,14 @@ public class IntegrationTest {
 		hostIp = Network.getHostIp();
 	}
 
-	@Test
-	public void testSwarm_assertInitializationWorks () {
-		initializeSwarmManager();
-		deinitializeSwarm();
+	public void deinitializeSwarm() {
+		dockerClient
+			.leaveSwarmCmd()
+			.withForceEnabled(true)
+			.exec();
 	}
 
-	public void initializeSwarmManager () {
+	public void initializeSwarmManager() {
 		dockerClient
 			.initializeSwarmCmd(new SwarmSpec())
 			.withAdvertiseAddr(hostIp)
@@ -46,13 +48,13 @@ public class IntegrationTest {
 			.exec();
 	}
 
-	public void deinitializeSwarm () {
-		dockerClient
-			.leaveSwarmCmd()
-			.withForceEnabled(true)
-			.exec();
+	@Test
+	public void testSwarm_assertInitializationWorks() {
+		initializeSwarmManager();
+		deinitializeSwarm();
 	}
 
 	private static DockerClient dockerClient;
 	private static String hostIp;
+
 }
