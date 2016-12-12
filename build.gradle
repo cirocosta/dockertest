@@ -24,9 +24,9 @@ repositories {
 }
 
 dependencies {
-  runtime	'ch.qos.logback:logback-core:1.1.7'
-  runtime	'ch.qos.logback:logback-classic:1.1.7'
-  runtime	'ch.qos.logback:log4j-bridge:0.9.7'
+    runtime	'ch.qos.logback:logback-core:1.1.7'
+    runtime	'ch.qos.logback:logback-classic:1.1.7'
+    runtime	'ch.qos.logback:log4j-bridge:0.9.7'
 
 	testCompile 'com.github.cirocosta:docker-java:docker-1-12-SNAPSHOT'
 	testCompile 'junit:junit:4.11'

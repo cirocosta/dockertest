@@ -2,6 +2,8 @@ package com.wedeploy.test;
 
 import com.wedeploy.test.fixture.DockerClientHelper;
 
+import java.util.UUID;
+
 import org.junit.BeforeClass;
 
 /**
@@ -12,6 +14,10 @@ public abstract class DockerTest {
 	@BeforeClass
 	public static void setUpTestSuite() {
 		docker = new DockerClientHelper();
+	}
+
+	protected String createID() {
+		return UUID.randomUUID().toString();
 	}
 
 	protected static DockerClientHelper docker;
