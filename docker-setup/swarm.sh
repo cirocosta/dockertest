@@ -6,15 +6,15 @@ set -o xtrace
 readonly KV_NODE_NAME="kv"
 readonly MANAGER_NODE_NAME="manager"
 
+
 main () {
   create_kv
   configure_kv
 
   create_manager
-  configure_manager
 
   for i in `seq 1 3`; do
-    add_worker $i &    
+    create_worker worker-$i &    
   done
   wait
 
@@ -46,35 +46,13 @@ configure_kv () {
 create_manager () {
   docker-machine create \
     -d virtualbox \
+    --swarm \
+    --swarm-master \
+    --swarm-discovery="consul://$(docker-machine ip $KV_NODE_NAME):8500" \
     --engine-opt="label=com.function=manager" \
     --engine-opt="cluster-store=consul://$(docker-machine ip $KV_NODE_NAME):8500" \
     --engine-opt="cluster-advertise=eth1:2376" \
     $MANAGER_NODE_NAME
-}
-
-
-configure_manager () {
-  docker `docker-machine config $MANAGER_NODE_NAME` run \
-    --restart=unless-stopped \
-    -d \
-    -p 3376:2375 \
-    -v /var/lib/boot2docker:/certs:ro \
-    swarm \
-      manage \
-      --tlsverify \
-      --tlscacert=/certs/ca.pem \
-      --tlscert=/certs/server.pem \
-      --tlskey=/certs/server-key.pem \
-      consul://$(docker-machine ip $KV_NODE_NAME):8500
-}
-
-
-add_worker () {
-  local node_id=$1
-  local name=worker-$node_id
-
-  create_worker $name
-  configure_worker $name
 }
 
 
@@ -83,22 +61,12 @@ create_worker () {
 
   docker-machine create \
     -d virtualbox \
+    --swarm \
+    --swarm-discovery="consul://$(docker-machine ip $KV_NODE_NAME):8500" \
     --engine-opt="label=com.function=$name" \
     --engine-opt="cluster-store=consul://$(docker-machine ip $KV_NODE_NAME):8500" \
     --engine-opt="cluster-advertise=eth1:2376" \
     $name
-}
-
-
-configure_worker () {
-  local name=$name
-
-  docker `docker-machine config $name` run \
-    -d \
-    swarm \
-      join \
-      --addr=$(docker-machine ip $name):2376 \
-      consul://$(docker-machine ip $KV_NODE_NAME):8500
 }
 
 
