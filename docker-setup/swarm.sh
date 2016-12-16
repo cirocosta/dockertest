@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -o errxit
+set -o errexit
+set -o xtrace
 
 readonly KV_NODE_NAME="kv"
 readonly MANAGER_NODE_NAME="manager"
@@ -53,7 +54,7 @@ create_manager () {
 
 
 configure_manager () {
-  docker run `docker-machine config $MANAGER_NODE_NAME` \
+  docker `docker-machine config $MANAGER_NODE_NAME` run \
     --restart=unless-stopped \
     -d \
     -p 3376:2375 \
@@ -70,15 +71,15 @@ configure_manager () {
 
 add_worker () {
   local node_id=$1
+  local name=worker-$node_id
 
-  create_worker $node_id
-  configure_worker $node_id
+  create_worker $name
+  configure_worker $name
 }
 
 
 create_worker () {
-  local node_id=$1
-  local name=worker-$node_id
+  local name=$1
 
   docker-machine create \
     -d virtualbox \
@@ -90,10 +91,9 @@ create_worker () {
 
 
 configure_worker () {
-  local node_id=$1
-  local name=worker-$node_id
+  local name=$name
 
-  docker run `docker-machine config $name` \
+  docker `docker-machine config $name` run \
     -d \
     swarm \
       join \
