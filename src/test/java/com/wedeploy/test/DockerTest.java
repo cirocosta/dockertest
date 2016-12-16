@@ -1,6 +1,6 @@
 package com.wedeploy.test;
 
-import com.wedeploy.test.fixture.DockerClientHelper;
+import com.wedeploy.test.fixture.DockerSwarmModeHelper;
 
 import java.util.UUID;
 
@@ -13,13 +13,13 @@ public abstract class DockerTest {
 
 	@BeforeClass
 	public static void setUpTestSuite() {
-		docker = new DockerClientHelper();
+		docker = new DockerSwarmModeHelper();
 	}
 
 	protected String createID() {
 		return UUID.randomUUID().toString();
 	}
 
-	protected static DockerClientHelper docker;
+	protected static DockerSwarmModeHelper docker;
 
 }

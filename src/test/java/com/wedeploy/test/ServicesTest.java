@@ -8,7 +8,7 @@ import com.github.dockerjava.api.model.ServiceReplicatedModeOptions;
 import com.github.dockerjava.api.model.ServiceSpec;
 import com.github.dockerjava.api.model.TaskSpec;
 
-import com.wedeploy.test.fixture.DockerClientHelper;
+import com.wedeploy.test.fixture.DockerSwarmModeHelper;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class ServicesTest extends DockerTest {
 
 	@BeforeClass
 	public static void setUpTestSuite() {
-		docker = new DockerClientHelper();
+		docker = new DockerSwarmModeHelper();
 
 		try {
 			docker.initializeSwarmManager();

@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Ciro S. Costa
  */
-public class DockerClientHelper {
+public class DockerSwarmModeHelper {
 
-	public DockerClientHelper() {
+	public DockerSwarmModeHelper() {
 		DockerClientConfig dockerConfig = DefaultDockerClientConfig
 			.createDefaultConfigBuilder()
 			.withApiVersion(RemoteApiVersion.VERSION_1_24)
@@ -51,6 +51,6 @@ public class DockerClientHelper {
 
 	private static DockerClient dockerClient;
 	private static final Logger log = LoggerFactory.getLogger(
-		DockerClientHelper.class);
+		DockerSwarmModeHelper.class);
 
 }
